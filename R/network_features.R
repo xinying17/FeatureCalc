@@ -29,7 +29,7 @@ network_features <- function(data_train,data_test,feature_type=c("smoothness","c
   test_label <- data_test$label
 
   # feature selection
-  if(nf < ncol(data_trainm)) {
+  if(nf < ncol(data_trainm) & nf>0) {
     nf = round(min(ncol(data_train),nf))
 
     # rank feature by ttest
