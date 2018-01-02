@@ -1,0 +1,17 @@
+{
+    "contents" : "network_features <- function(data_train,data_test,feature_type=c(\"smoothness\",\"calculus\"),p,corr,nf,powerS,nc,L)\n{\n  if(missing(p)) p=0;\n  if(missing(corr)) corr=0;\n\n  if(missing(L)){\n    L='label'\n  }\n\n  if(missing(powerS)){\n    powerS=1\n  }\n\n  if(missing(nc)){\n    nc=1\n  }\n\n  if(missing(nf)){\n    nf=0\n  }\n\n  classes <- unique(data_train$label)\n\n  names(data_train)[colnames(data_train)==L] <- paste(\"label\")\n  names(data_test)[colnames(data_test)==L] <- paste(\"label\")\n\n  data_trainm <- data_train[,colnames(data_train)!=L]\n  data_testm <- data_test[,colnames(data_test)!=L]\n\n\n  train_label <- data_train$label\n  test_label <- data_test$label\n\n  # feature selection\n  if(nf < ncol(data_trainm) & nf>0) {\n    nf = round(min(ncol(data_train),nf))\n\n    # rank feature by ttest\n    indx <- rankfeature(L,data_train,classes,nf)\n    train_label <- data_train[,colnames(data_train)==L]\n    data_trainm <- data_trainm[,indx]\n    test_label <- data_test[,colnames(data_test)==L]\n    data_testm <- data_testm[,indx]\n  }\n\n\n  # feature map\n  if(feature_type==\"calculus\"){\n    new_data <- new_feature_type1(data_trainm,train_label,data_testm,classes,p,corr,powerS)\n  }\n\n\n  # network classifier with sub-networks\n  if(feature_type==\"smoothness\"){\n    if(nc==1){\n      new_data <- new_feature_type2(data_trainm,train_label,data_testm,classes,p,corr,powerS)\n    }\n    else{\n      new_data <- new_feature_type3(data_trainm,train_label,data_testm,classes,p,corr,powerS,nc)\n    }\n\n  }\n\n  # remove na and inf\n  new_data <- data.frame(scale(new_data))\n\n  is.na(new_data) <- sapply(new_data, is.infinite)\n  is.na(new_data) <- sapply(new_data, is.nan)\n  ind_na <- colSums(is.na(new_data))==0\n  new_data <- new_data[,ind_na]\n\n  xx = seq(from=1,to=nrow(data_train),by=1)\n\n  new_train <- new_data[xx,]\n  new_test <- new_data[-xx,]\n\n  return(list(new_train = new_train, new_test = new_test, train_label = train_label, test_label = test_label))\n\n}\n",
+    "created" : 1514929085187.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1117076900",
+    "id" : "FB4D080F",
+    "lastKnownWriteTime" : 1514933988,
+    "path" : "~/Codes/R/FeatureCalc/R/network_features.R",
+    "project_path" : "R/network_features.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
