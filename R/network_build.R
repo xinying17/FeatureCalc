@@ -1,20 +1,21 @@
 # builds a network based on correlation (default=spearman)
 # return network and laplacian of the network
 
-network_build <- function(data_train,p,corr,cor.method) {
+network_build <- function(data_train,p,corr) {
 
   if(missing(p)){
     p=0
   }
 
-  if(missing(cor.method)){
-    cor.method = "spearman"
-  }
+# if(missing(cor.method)){
+#    cor.method = "spearman"
+#  }
 
   if(missing(corr)){
     corr="plus"
   }
 
+  cor.method = "spearman"
   network_corr <- cor(data_train,method = cor.method)
 
   num_sample = nrow(data_train) - 2 # degrees of freedom

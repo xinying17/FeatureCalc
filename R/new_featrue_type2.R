@@ -19,7 +19,7 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
   aa=1
   for(t in classes){
     class_train_data <- data_trainm[train_label==t,]
-    nets <- network_build(class_train_data, p, corr)
+    nets <- network_build(class_train_data,p,corr,cor.method)
     train_nets$types[[aa]] <- t
     train_nets$featureIDX[[aa]] <- colnames(data_trainm)
     train_nets$nets[[aa]] <- nets
