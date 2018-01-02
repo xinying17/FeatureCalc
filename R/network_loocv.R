@@ -31,7 +31,7 @@ network_loocv <- function(data_matrix,feature_type,nf,powerS,nc,L,classifier,ker
   for(i in 1:nrow(data_matrix)){
     data_train <- data_matrix[-i,]  # training data
     data_test <- data_matrix[i,] # test data
-    result <- network_classify(data_train,data_test,feature_type,nf,powerS,nc,L,classifier,kern)
+    result <- network_classify(data_train,data_test,feature_type,p,corr,nf,powerS,nc,L,classifier,kern)
     pred[[i]] <- result$pred
   }
   predx <- as.numeric(as.factor(pred))
