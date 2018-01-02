@@ -1,0 +1,17 @@
+{
+    "contents" : "# main function\nnetwork_classify <- function(data_train,data_test,feature_type,nf,s,nc,L,classifier,kern){\n\n  if(missing(L)){\n    L='label'\n  }\n\n  if(missing(nf)){\n    nf=0\n  }\n\n  if(missing(s)){\n    s=1\n  }\n\n  if(missing(nc)){\n    nc=1\n  }\n\n  if(missing(classifier)){\n    classifier = \"SVM\"\n  }\n\n  if(missing(kern)){\n    kern = \"linear\"\n  }\n\n  nc = round(max(1,min(nc,nf/5)))\n\n  newdata <- network_features(data_train,data_test,nf,feature_type,nf,s,nc,L)\n\n  # test\n  if(classifier==\"SVM\")\n  {\n    require('e1071', quietly = TRUE)\n    library(e1071)\n\n    wts <- nrow(newdata$new_train) / table(newdata$train_label)\n    model1 <- svm(newdata$new_train,newdata$train_label,type=\"C-classification\",class.weights = wts,kernel = kern)\n    prediction <- predict(model1, newdata$new_test)\n  }\n\n  if(classifier==\"RF\")\n  {\n    require('randomForest', quietly = TRUE)\n    library(randomForest)\n    model_rf <- randomForest(newdata$new_train,newdata$train_label,importance=TRUE, proximity=TRUE)\n    prediction <- predict(model_rf, newdata$new_test)\n  }\n\n  return(list(pred = prediction, acc = sum(prediction==newdata$test_label)/nrow(data_test)))\n}\n\n\n",
+    "created" : 1514929797932.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1181052882",
+    "id" : "ABC7432B",
+    "lastKnownWriteTime" : 1514929995,
+    "path" : "~/Codes/R/FeatureCalc/R/network_classify.R",
+    "project_path" : "R/network_classify.R",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
