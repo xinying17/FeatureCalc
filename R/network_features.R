@@ -42,13 +42,13 @@ network_features <- function(data_train,data_test,feature_type=c("smoothness","c
 
 
   # feature map
-  if(f_type=="calculus"){
+  if(feature_type=="calculus"){
     new_data <- new_feature_type1(data_trainm,train_label,data_testm,classes,p,corr,s)
   }
 
 
   # network classifier with sub-networks
-  if(f_type=="smoothness"){
+  if(feature_type=="smoothness"){
     if(nc==1){
       new_data <- new_feature_type2(data_trainm,train_label,data_testm,classes,p,corr,s)
     }
