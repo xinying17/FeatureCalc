@@ -1,11 +1,11 @@
-network_features <- function(data_train,data_test,feature_type=c("smoothness","calculus"),nf,s,nc,L)
+network_features <- function(data_train,data_test,feature_type=c("smoothness","calculus"),nf,powerS,nc,L)
 {
   if(missing(L)){
     L='label'
   }
 
-  if(missing(s)){
-    s=1
+  if(missing(powerS)){
+    powerS=1
   }
 
   if(missing(nc)){
@@ -43,17 +43,17 @@ network_features <- function(data_train,data_test,feature_type=c("smoothness","c
 
   # feature map
   if(feature_type=="calculus"){
-    new_data <- new_feature_type1(data_trainm,train_label,data_testm,classes,p,corr,s)
+    new_data <- new_feature_type1(data_trainm,train_label,data_testm,classes,p,corr,powerS)
   }
 
 
   # network classifier with sub-networks
   if(feature_type=="smoothness"){
     if(nc==1){
-      new_data <- new_feature_type2(data_trainm,train_label,data_testm,classes,p,corr,s)
+      new_data <- new_feature_type2(data_trainm,train_label,data_testm,classes,p,corr,powerS)
     }
     else{
-      new_data <- new_feature_type3(data_trainm,train_label,data_testm,classes,p,corr,s,nc)
+      new_data <- new_feature_type3(data_trainm,train_label,data_testm,classes,p,corr,powerS,nc)
     }
 
   }

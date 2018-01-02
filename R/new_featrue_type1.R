@@ -1,7 +1,7 @@
-new_feature_type1 <- function(data_trainm,train_label,data_testm,classes,p,corr,s){
+new_feature_type1 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS){
 
-  if(missing(s)){
-    s=1
+  if(missing(powerS)){
+    powerS=1
   }
 
   if(missing(p)){
@@ -36,7 +36,7 @@ new_feature_type1 <- function(data_trainm,train_label,data_testm,classes,p,corr,
     V <- r$vectors
     lam <- r$values
     lam[lam<0] = 0
-    Lmbd = diag(lam ** abs(s))
+    Lmbd = diag(lam ** abs(powerS))
     if(s<0){
       Lmbd = ginv(Lmbd)
     }

@@ -1,6 +1,6 @@
-new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,s){
-  if(missing(s)){
-    s=1
+new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS){
+  if(missing(powerS)){
+    powerS=1
   }
 
   if(missing(p)){
@@ -15,6 +15,7 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
   train_nets <- structure(list(types = character(),
                                featureIDX = list(),
                                nets = list()))
+
   aa=1
   for(t in classes){
     class_train_data <- data_trainm[train_label==t,]
@@ -35,7 +36,7 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
     V <- r$vectors
     lam <- r$values
     lam[lam<0] = 0
-    Lmbd = diag(lam ** abs(s))
+    Lmbd = diag(lam ** abs(powerS))
     newL = V %*% Lmbd %*% solve(V)
     lap_fun <- function(x) {x %*% newL %*% x}
     new_train <- cbind(new_train,apply(as.matrix(data_trainm),1,lap_fun))

@@ -1,6 +1,6 @@
-new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,s,nc){
-  if(missing(s)){
-    s=1
+new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS,nc){
+  if(missing(powerS)){
+    powerS=1
   }
 
   if(missing(p)){
@@ -46,7 +46,7 @@ new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,
   for(b in 1:length(train_nets$types)){
     nets <- train_nets$nets[[b]]
     smooth_value <- smoothness(Lap = nets$laplacian,
-                               data_trainm[,train_nets$featureIDX[[b]]],s)
+                               data_trainm[,train_nets$featureIDX[[b]]],powerS)
     new_train[,b] <- smooth_value
   }
 
@@ -54,7 +54,7 @@ new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,
   for(b in 1:length(train_nets$types)){
     nets <- train_nets$nets[[b]]
     smooth_value <- smoothness(nets$laplacian,
-                               data_testm[,train_nets$featureIDX[[b]]],s)
+                               data_testm[,train_nets$featureIDX[[b]]],powerS)
     new_test[,b] <- smooth_value
   }
 
