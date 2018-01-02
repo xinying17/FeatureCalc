@@ -3,17 +3,9 @@
 
 network_build <- function(data_train,p,corr) {
 
-  if(missing(p)){
-    p=0
-  }
+  if(missing(p)) p=0;
 
-# if(missing(cor.method)){
-#    cor.method = "spearman"
-#  }
-
-  if(missing(corr)){
-    corr="plus"
-  }
+  if(missing(corr)) corr="plus";
 
   cor.method = "spearman"
   network_corr <- cor(data_train,method = cor.method)

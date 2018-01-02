@@ -1,7 +1,4 @@
 new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS){
-  if(missing(powerS)){
-    powerS=1
-  }
 
   if(missing(p)){
     p=0
@@ -11,6 +8,10 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
     corr=0
   }
 
+  if(missing(powerS)){
+    powerS=1
+  }
+
   # network classifier with 2 networks
   train_nets <- structure(list(types = character(),
                                featureIDX = list(),
@@ -18,7 +19,7 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
 
   aa=1
   for(t in classes){
-    class_train_data <- data_trainm[train_label==t,]
+    class_train_data <- data_trainm[train_label==classes[t],]
     nets <- network_build(class_train_data,p,corr)
     train_nets$types[[aa]] <- t
     train_nets$featureIDX[[aa]] <- colnames(data_trainm)
