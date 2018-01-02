@@ -1,4 +1,6 @@
-network_loocv <- function(data_matrix,feature_type,nf,powerS,nc,L,classifier,kern){
+network_loocv <- function(data_matrix,feature_type,p,corr,nf,powerS,nc,L,classifier,kern){
+  if(missing(p)) p=0;
+  if(missing(corr)) corr=0;
 
   if(missing(L)){
     L='label'

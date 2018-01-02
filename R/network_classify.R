@@ -1,5 +1,7 @@
 # main function
-network_classify <- function(data_train,data_test,feature_type,nf,powerS,nc,L,classifier,kern){
+network_classify <- function(data_train,data_test,feature_type,p,corr,nf,powerS,nc,L,classifier,kern){
+  if(missing(p)) p=0;
+  if(missing(corr)) corr=0;
 
   if(missing(nf)){
     nf=0
