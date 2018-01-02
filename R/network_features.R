@@ -1,6 +1,7 @@
-network_features <- function(data_train,data_test,feature_type=c("smoothness","calculus"),nf,powerS,nc,L)
-
+network_features <- function(data_train,data_test,feature_type=c("smoothness","calculus"),p,nf,powerS,nc,L)
 {
+  if(missing(p)) p=0;
+
   if(missing(L)){
     L='label'
   }

@@ -8,6 +8,7 @@ network_build <- function(data_train,p,corr) {
   if(missing(corr)) corr="plus";
 
   cor.method = "spearman"
+
   network_corr <- cor(data_train,method = cor.method)
 
   num_sample = nrow(data_train) - 2 # degrees of freedom
