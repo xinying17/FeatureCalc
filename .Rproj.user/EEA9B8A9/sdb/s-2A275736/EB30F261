@@ -1,7 +1,7 @@
 {
     "contents" : "new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS){\n  if(missing(powerS)){\n    powerS=1\n  }\n\n  if(missing(p)){\n    p=0\n  }\n\n  if(missing(corr)){\n    corr=0\n  }\n\n  # network classifier with 2 networks\n  train_nets <- structure(list(types = character(),\n                               featureIDX = list(),\n                               nets = list()))\n\n  aa=1\n  for(t in classes){\n    class_train_data <- data_trainm[train_label==t,]\n    nets <- network_build(class_train_data, p, corr)\n    train_nets$types[[aa]] <- t\n    train_nets$featureIDX[[aa]] <- colnames(data_trainm)\n    train_nets$nets[[aa]] <- nets\n    aa=aa+1\n  }\n\n  new_train = NULL\n  new_test = NULL\n\n  for(b in 1:length(train_nets$types)){\n    nets <- train_nets$nets[[b]]\n\n    r <- eigen(nets$laplacian)\n    V <- r$vectors\n    lam <- r$values\n    lam[lam<0] = 0\n    Lmbd = diag(lam ** abs(powerS))\n    newL = V %*% Lmbd %*% solve(V)\n    lap_fun <- function(x) {x %*% newL %*% x}\n    new_train <- cbind(new_train,apply(as.matrix(data_trainm),1,lap_fun))\n    new_test <- cbind(new_test,apply(as.matrix(data_testm),1,lap_fun))\n  }\n\n  new_data <- rbind(new_train,new_test)\n\n  return(new_data)\n}\n",
     "created" : 1514931182790.000,
-    "dirty" : false,
+    "dirty" : true,
     "encoding" : "UTF-8",
     "folds" : "",
     "hash" : "952972736",

@@ -11,7 +11,7 @@ network_build <- function(data_train,p,corr,cor.method) {
     cor.method = "spearman"
   }
 
-  if(missing(s)){
+  if(missing(corr)){
     corr="plus"
   }
 
