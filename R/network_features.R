@@ -37,9 +37,7 @@ network_features <- function(data_train,data_test,feature_type=c("smoothness","c
 
     # rank feature by ttest
     indx <- rankfeature(L,data_train,classes,nf)
-    train_label <- data_train[,colnames(data_train)==L]
     data_trainm <- data_trainm[,indx]
-    test_label <- data_test[,colnames(data_test)==L]
     data_testm <- data_testm[,indx]
   }
 
