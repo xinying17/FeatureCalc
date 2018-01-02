@@ -1,4 +1,28 @@
-network_loocv <- function(data_matrix,feature_type,nf,s,nc,L,classifier,kern){
+network_loocv <- function(data_matrix,feature_type,nf,powerS,nc,L,classifier,kern){
+
+  if(missing(L)){
+    L='label'
+  }
+
+  if(missing(nf)){
+    nf=0
+  }
+
+  if(missing(powerS)){
+    powerS=1
+  }
+
+  if(missing(nc)){
+    nc=1
+  }
+
+  if(missing(classifier)){
+    classifier = "SVM"
+  }
+
+  if(missing(kern)){
+    kern = "linear"
+  }
 
   names(data_matrix)[colnames(data_matrix)==L] <- paste("label")
   pred <- NULL
@@ -7,7 +31,7 @@ network_loocv <- function(data_matrix,feature_type,nf,s,nc,L,classifier,kern){
   for(i in 1:nrow(data_matrix)){
     data_train <- data_matrix[-i,]  # training data
     data_test <- data_matrix[i,] # test data
-    result <- network_classify(data_train,data_test,feature_type,nf,s,nc,L,classifier,kern)
+    result <- network_classify(data_train,data_test,feature_type,nf,powerS,nc,L,classifier,kern)
     pred[[i]] <- result$pred
   }
   predx <- as.numeric(as.factor(pred))
