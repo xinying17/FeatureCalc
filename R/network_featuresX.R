@@ -15,6 +15,7 @@ network_features <- function(data_train,data_test,feature_type=c("smoothness","c
   data_trainm <- data_train[,colnames(data_train)!=L]
   data_testm <- data_test[,colnames(data_test)!=L]
 
+
   train_label <- data_train$label
   test_label <- data_test$label
 

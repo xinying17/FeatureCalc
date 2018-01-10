@@ -1,21 +1,14 @@
 new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS){
 
-  if(missing(p)){
-    p=0
-  }
-
-  if(missing(corr)){
-    corr=0
-  }
-
-  if(missing(powerS)){
-    powerS=1
-  }
+  if(missing(p)) p=0;
+  if(missing(corr)) corr=0
+  if(missing(powerS)) powerS=1;
 
   # network classifier with 2 networks
   train_nets <- structure(list(types = character(),
                                featureIDX = list(),
-                               nets = list()))
+                               nets = list(),
+                               means = list()))
 
   aa=1
   for(t in classes){
@@ -24,6 +17,7 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
     train_nets$types[[aa]] <- t
     train_nets$featureIDX[[aa]] <- colnames(data_trainm)
     train_nets$nets[[aa]] <- nets
+    train_nets$means[[aa]] <- colMeans(class_train_data)
     aa=aa+1
   }
 
@@ -32,6 +26,7 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
 
   for(b in 1:length(train_nets$types)){
     nets <- train_nets$nets[[b]]
+    centroid <- train_nets$means[[b]]
 
     r <- eigen(nets$laplacian)
     V <- r$vectors
@@ -40,8 +35,8 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
     Lmbd = diag(lam ** abs(powerS))
     newL = V %*% Lmbd %*% solve(V)
     lap_fun <- function(x) {x %*% newL %*% x}
-    new_train <- cbind(new_train,apply(as.matrix(data_trainm),1,lap_fun))
-    new_test <- cbind(new_test,apply(as.matrix(data_testm),1,lap_fun))
+    new_train <- cbind(new_train,apply(as.matrix(t(t(data_trainm)-centroid)),1,lap_fun))
+    new_test <- cbind(new_test,apply(as.matrix(t(t(data_testm)-centroid)),1,lap_fun))
   }
 
   new_data <- rbind(new_train,new_test)
