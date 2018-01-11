@@ -39,8 +39,7 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
       centroid <- train_nets$means[[b]]
       new_train <- cbind(new_train,apply(as.matrix(t(t(data_trainm)-centroid)),1,lap_fun))
       new_test <- cbind(new_test,apply(as.matrix(t(t(data_testm)-centroid)),1,lap_fun))
-    }
-    else{
+    } else{
       new_train <- cbind(new_train,apply(as.matrix(data_trainm),1,lap_fun))
       new_test <- cbind(new_test,apply(as.matrix(data_testm),1,lap_fun))
     }
