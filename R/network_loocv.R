@@ -1,30 +1,12 @@
 network_loocv <- function(data_matrix,feature_type,p,corr,nf,powerS,nc,L,classifier,kern){
   if(missing(p)) p=0;
   if(missing(corr)) corr=0;
-
-  if(missing(L)){
-    L='label'
-  }
-
-  if(missing(nf)){
-    nf=0
-  }
-
-  if(missing(powerS)){
-    powerS=1
-  }
-
-  if(missing(nc)){
-    nc=1
-  }
-
-  if(missing(classifier)){
-    classifier = "SVM"
-  }
-
-  if(missing(kern)){
-    kern = "linear"
-  }
+  if(missing(L)) L='label';
+  if(missing(nf)) nf=0;
+  if(missing(powerS)) powerS=1;
+  if(missing(nc)) nc=1;
+  if(missing(classifier)) classifier = "SVM";
+  if(missing(kern)) kern = "linear";
 
   names(data_matrix)[colnames(data_matrix)==L] <- paste("label")
   pred <- NULL

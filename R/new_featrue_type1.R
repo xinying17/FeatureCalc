@@ -1,16 +1,8 @@
 new_feature_type1 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS){
 
-  if(missing(powerS)){
-    powerS=1
-  }
-
-  if(missing(p)){
-    p=0
-  }
-
-  if(missing(corr)){
-    corr=0
-  }
+  if(missing(p)) p=0;
+  if(missing(corr)) corr=0;
+  if(missing(powerS)) powerS=1;
 
   # feature map with laplacian
   train_nets <- structure(list(types = character(),

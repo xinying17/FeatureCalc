@@ -1,19 +1,10 @@
 new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS,nc){
-  if(missing(powerS)){
-    powerS=1
-  }
 
-  if(missing(p)){
-    p=0
-  }
+  if(missing(p)) p=0;
+  if(missing(corr)) corr=0;
+  if(missing(powerS)) powerS=1;
 
-  if(missing(corr)){
-    corr=0
-  }
-
-  if(missing(nc)){
-    nc=1
-  }
+  if(missing(nc)) nc=1;
 
    # network classifier with 2*nc networks
 
