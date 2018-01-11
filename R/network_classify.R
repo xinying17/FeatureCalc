@@ -25,7 +25,7 @@ network_classify <- function(data_train,data_test,feature_type,p,corr,nf,powerS,
 
   nc = round(max(1,min(nc,nf/5)))
 
-  newdata <- network_features(data_train,data_test,feature_type,p,corr,nf,powerS,nc,L)
+  newdata <- network_features(data_train,data_test,feature_type,p,corr,nf,powerS,nc,L,vars)
 
   # test
   if(classifier=="SVM")
