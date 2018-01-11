@@ -29,7 +29,7 @@ new_feature_type1 <- function(data_trainm,train_label,data_testm,classes,p,corr,
     lam <- r$values
     lam[lam<0] = 0
     Lmbd = diag(lam ** abs(powerS))
-    if(s<0){
+    if(powerS<0){
       Lmbd = ginv(Lmbd)
     }
     newL = V %*% Lmbd %*% solve(V)
