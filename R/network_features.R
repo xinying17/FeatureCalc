@@ -47,7 +47,7 @@ network_features <- function(data_train,data_test,feature_type=c("smoothness","c
   }
 
   # remove na and inf
-  new_data <- data.frame(scale(new_data))
+  new_data <- data.frame(log(new_data))
 
   is.na(new_data) <- sapply(new_data, is.infinite)
   is.na(new_data) <- sapply(new_data, is.nan)
