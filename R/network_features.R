@@ -41,7 +41,7 @@ network_features <- function(data_train,data_test,feature_type=c("smoothness","c
     if(nc==1){
       new_data <- new_feature_type2(data_trainm,train_label,data_testm,classes,p,corr,powerS,vars)
     } else{
-      new_data <- new_feature_type3(data_trainm,train_label,data_testm,classes,p,corr,powerS,nc)
+      new_data <- new_feature_type3(data_trainm,train_label,data_testm,classes,p,corr,powerS,vars,nc)
     }
 
   }

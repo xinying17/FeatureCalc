@@ -1,4 +1,4 @@
-new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS,nc){
+new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS,vars,nc){
 
   if(missing(p)) p=0;
   if(missing(corr)) corr=0;
