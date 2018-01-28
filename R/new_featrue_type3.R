@@ -3,7 +3,7 @@ new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,
   if(missing(p)) p=0;
   if(missing(corr)) corr=0;
   if(missing(powerS)) powerS=1;
-
+  if(missing(vars)) vars=0;
   if(missing(nc)) nc=1;
 
   # network classifier with 2*nc networks
@@ -29,6 +29,7 @@ new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,
         train_nets$types[[aa]] <- t
         train_nets$featureIDX[[aa]] <- colnames(x)
         train_nets$nets[[aa]] <- nets
+        train_nets$means[[aa]] <- colMeans(x)
         aa = aa+1
       }
     }
@@ -38,19 +39,23 @@ new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,
   new_test <- matrix(nrow = nrow(data_testm),ncol = length(train_nets$types))
 
   # new train data
-  for(b in 1:length(train_nets$types)){
-    nets <- train_nets$nets[[b]]
-    smooth_value <- smoothness(Lap = nets$laplacian,
-                               data_trainm[,train_nets$featureIDX[[b]]],powerS)
-    new_train[,b] <- smooth_value
-  }
 
-  # new test data
+
   for(b in 1:length(train_nets$types)){
     nets <- train_nets$nets[[b]]
-    smooth_value <- smoothness(nets$laplacian,
-                               data_testm[,train_nets$featureIDX[[b]]],powerS)
-    new_test[,b] <- smooth_value
+    if(vars==1){
+      centroid <- train_nets$means[[b]]
+      data_trainmx = as.matrix(t(t(data_trainm[,train_nets$featureIDX[[b]]])-centroid))
+      data_testmx = as.matrix(t(t(data_testm[,train_nets$featureIDX[[b]]])-centroid))
+    } else{
+      data_trainmx = data_trainm[,train_nets$featureIDX[[b]]]
+      data_testmx = data_testm[,train_nets$featureIDX[[b]]]
+    }
+    smooth_value1 <- smoothness(Lap = nets$laplacian,data_trainmx,powerS)
+    new_train[,b] <- smooth_value1
+
+    smooth_value2 <- smoothness(nets$laplacian,data_testmx,powerS)
+    new_test[,b] <- smooth_value2
   }
 
   new_data <- rbind(new_train,new_test)
