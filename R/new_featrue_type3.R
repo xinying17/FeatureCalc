@@ -6,18 +6,22 @@ new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,
 
   if(missing(nc)) nc=1;
 
-   # network classifier with 2*nc networks
+  # network classifier with 2*nc networks
 
   train_nets <- structure(list(types = character(),
                                featureIDX = list(),
                                nets = list()))
 
+  require(igraph)
   # build network for each class
   aa = 1
   for(t in classes){
     class_train <- data_trainm[train_label==t,]
-    clusters <- hclust(dist(t(as.matrix(class_train))),method = "ward.D")
-    clusterCut <- cutree(clusters, nc)
+    corr <- cor(class_train)
+    g=graph.adjacency(abs(corr), mode="plus",weighted=TRUE)
+    fc <- fastgreedy.community(g)
+    clusterCut <- fc$membership
+    nc = max(clusterCut)
     for(i in 1:nc){
       x = data.frame(class_train[,clusterCut==i])
       if(ncol(x)>2){
