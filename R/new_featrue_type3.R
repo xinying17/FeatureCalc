@@ -1,9 +1,9 @@
-new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS,vars,nc){
+new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS,normal,nc){
 
   if(missing(p)) p=0;
   if(missing(corr)) corr=0;
   if(missing(powerS)) powerS=1;
-  if(missing(vars)) vars=0;
+  if(missing(normal)) normal=1;
   if(missing(nc)) nc=1;
 
   # network classifier with 2*nc networks
@@ -43,7 +43,7 @@ new_feature_type3 <- function(data_trainm,train_label,data_testm,classes,p,corr,
 
   for(b in 1:length(train_nets$types)){
     nets <- train_nets$nets[[b]]
-    if(vars==1){
+    if(normal==1){
       centroid <- train_nets$means[[b]]
       data_trainmx = as.matrix(t(t(data_trainm[,train_nets$featureIDX[[b]]])-centroid))
       data_testmx = as.matrix(t(t(data_testm[,train_nets$featureIDX[[b]]])-centroid))

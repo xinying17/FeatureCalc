@@ -1,5 +1,5 @@
 # main function
-network_classify <- function(data_train,data_test,feature_type,p,corr,nf,powerS,nc,L,classifier,kern,vars){
+network_classify <- function(data_train,data_test,feature_type,p,corr,nf,powerS,nc,L,classifier,kern,normal){
   if(missing(p)) p=0;
   if(missing(corr)) corr=0;
   if(missing(nf)) nf=0;
@@ -7,12 +7,12 @@ network_classify <- function(data_train,data_test,feature_type,p,corr,nf,powerS,
   if(missing(nc)) nc=1;
   if(missing(classifier)) classifier = "SVM";
   if(missing(kern)) kern = "linear";
-  if(missing(vars)) vars=0;
+  if(missing(normal)) normal=1;
   if(missing(L)) L="label";
 
   nc = round(max(1,min(nc,nf/5)))
 
-  newdata <- network_features(data_train,data_test,feature_type,p,corr,nf,powerS,nc,L,vars)
+  newdata <- network_features(data_train,data_test,feature_type,p,corr,nf,powerS,nc,L,normal)
 
   # test
   if(classifier=="SVM")

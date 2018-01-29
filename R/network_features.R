@@ -1,4 +1,4 @@
-network_features <- function(data_train,data_test,feature_type=c("smoothness","calculus"),p,corr,nf,powerS,nc,L,vars)
+network_features <- function(data_train,data_test,feature_type=c("smoothness","calculus"),p,corr,nf,powerS,nc,L,normal)
 {
   if(missing(p)) p=0;
   if(missing(corr)) corr=0;
@@ -6,7 +6,7 @@ network_features <- function(data_train,data_test,feature_type=c("smoothness","c
   if(missing(powerS)) powerS=1;
   if(missing(nc)) nc=1;
   if(missing(nf)) nf=0
-  if(missing(vars)) vars=0;
+  if(missing(normal)) normal=1;
 
   classes <- unique(data_train$label)
 
@@ -39,11 +39,10 @@ network_features <- function(data_train,data_test,feature_type=c("smoothness","c
   # network classifier with sub-networks
   if(feature_type=="smoothness"){
     if(nc==1){
-      new_data <- new_feature_type2(data_trainm,train_label,data_testm,classes,p,corr,powerS,vars)
+      new_data <- new_feature_type2(data_trainm,train_label,data_testm,classes,p,corr,powerS,normal)
     } else{
-      new_data <- new_feature_type3(data_trainm,train_label,data_testm,classes,p,corr,powerS,vars,nc)
+      new_data <- new_feature_type3(data_trainm,train_label,data_testm,classes,p,corr,powerS,normal,nc)
     }
-
   }
 
   # remove na and inf

@@ -1,9 +1,9 @@
-new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS,vars){
+new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,powerS,normal){
 
   if(missing(p)) p=0;
   if(missing(corr)) corr=0;
   if(missing(powerS)) powerS=1;
-  if(missing(vars)) vars=0;
+  if(missing(normal)) normal=1;
 
   # network classifier with 2 networks
   train_nets <- structure(list(types = character(),
@@ -35,7 +35,7 @@ new_feature_type2 <- function(data_trainm,train_label,data_testm,classes,p,corr,
     Lmbd = diag(lam ** abs(powerS))
     newL = V %*% Lmbd %*% solve(V)
     lap_fun <- function(x) {x %*% newL %*% x}
-    if(vars==1){
+    if(normal==1){
       centroid <- train_nets$means[[b]]
       new_train <- cbind(new_train,apply(as.matrix(t(t(data_trainm)-centroid)),1,lap_fun))
       new_test <- cbind(new_test,apply(as.matrix(t(t(data_testm)-centroid)),1,lap_fun))
