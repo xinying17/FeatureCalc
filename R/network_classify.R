@@ -15,7 +15,7 @@ network_classify <- function(data_train,data_test,feature_type,p,corr,nf,powerS,
 
   newdata <- network_features(data_train,data_test,feature_type,p,corr,nf,powerS,nc,L,normal)
 
-  if(add=1)
+  if(add==1)
   {
     data_trainx <- cbind(newdata$new_train,data_train)
     data_trainx <- subset(data_trainx,select=-label)
